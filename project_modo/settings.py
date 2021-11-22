@@ -60,9 +60,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'app_main',
     'app_member',
+    'corsheaders', # React와 연결 하기 위한 CORS 추가 2021.11.22 jsji
 ]
 
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware', # React와 연결 하기 위한 CORS 추가 2021.11.22 jsji
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -70,6 +72,12 @@ MIDDLEWARE = [
     'django.contrib.auth.middleware.AuthenticationMiddleware',
     'django.contrib.messages.middleware.MessageMiddleware',
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
+]
+
+# React와 연결 하기 위한 CORS 추가 2021.11.22 jsji
+CORS_ORIGIN_WHITELIST = [
+    "http://localhost:3000",
+    "http://127.0.0.1:8000",
 ]
 
 ROOT_URLCONF = 'project_modo.urls'
