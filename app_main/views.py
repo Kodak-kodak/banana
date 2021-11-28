@@ -4,10 +4,3 @@ from django.http import JsonResponse
 def index(request):
     data = {'email':'hansolove@gmail.com'}
     return JsonResponse(data)
-
-
-
-
-# local dev test
-def dev_index(request):
-    return render(request, 'dev_index.html')

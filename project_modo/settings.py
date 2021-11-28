@@ -60,6 +60,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'app_main',
     'app_member',
+    'app_dev',
     'corsheaders', # React와 연결 하기 위한 CORS 추가 2021.11.22 jsji
 ]
 
