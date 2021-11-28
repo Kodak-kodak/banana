@@ -3,5 +3,8 @@ from . import views
 
 urlpatterns = [
     path('', views.index, name="index"),
-    path('index_test', views.index_test, name="index_test"),
+
+
+    # local dev test
+    path('dev_index', views.dev_index, name="dev_index"),
 ]
