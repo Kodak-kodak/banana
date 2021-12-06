@@ -5,4 +5,5 @@ from . import views
 urlpatterns = [
     path('', views.index, name="index"),
     path('test_json/', views.test_json, name="test_json"),
+    path('singup/', views.CreateUserView.as_view(), name='singup'),
 ]

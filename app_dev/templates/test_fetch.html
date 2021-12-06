@@ -1,0 +1,55 @@
+<!doctype html>
+<html>
+<head>
+    <title>Document</title>
+</head>
+<body>
+
+    ID : <input type="text" name="test_id" id="test_id" />
+    <br>
+    PW : <input type="password" name="test_pw" id="test_pw" />
+    <br>
+    <button id="test_btn">회원가입</button>
+
+    <p id="test_p"></p>
+
+    <script>
+    
+    // id가 test인 요소에 클릭 이벤틀르 추가한다.
+    document.getElementById("test_btn").addEventListener("click", () => {
+
+        var headers = new Headers();
+        var csrftoken = '{{csrf_token}}';
+
+        var test_id = document.getElementById("test_id").value;
+        var test_pw = document.getElementById("test_pw").value;
+
+        headers.append('X-CSRFToken', csrftoken);
+        headers.append('Accept', 'application/json, text/plain, */*');
+        headers.append('Content-Type', 'application/x-www-form-urlencoded');
+
+        fetch('{% url "test_json" %}',
+            {
+                method: 'post',
+                headers: headers,
+                credentials: 'include',
+                body: JSON.stringify({
+                    test_id: test_id,
+                    test_pw: test_pw,
+                })
+            }
+        )
+        .then((res) => res.json())
+        .then(function(response) {
+            console.log(response);            
+            document.getElementById("test_p").innerHTML = "통신성공";
+        })
+        .catch(
+        err => console.log(err)
+        );
+
+    });
+    </script> 
+
+</body>
+</html>
