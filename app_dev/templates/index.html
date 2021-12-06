@@ -4,41 +4,52 @@
     <title>Document</title>
 </head>
 <body>
-    <!-- 예제를 위한 버튼 -->
-    <button id="test">click</button>
-<script>
-// id가 test인 요소에 클릭 이벤틀르 추가한다.
-document.getElementById("test").addEventListener("click", () => {
-    // ajax를 하기 위한 XmlHttpRequest 객체
-    let xhttp = new XMLHttpRequest();
-    // XmlHttpRequest의 요청
-    xhttp.onreadystatechange = (e) => {
-        // XMLHttpRequest를 이벤트 파라미터에서 취득
-        let req = e.target;
-        // 콘솔 출력
-        console.log(req);
-        // 통신 상태가 완료가 되면.
-        if (req.readyState === XMLHttpRequest.DONE) {
-            // Http response 응답코드가 200(정상)이면
-            if (req.status === 200) {
-                // response 결과를 콘솔에 출력
-                console.log(req.response);
-                // json 타입이므로 object 형식으로 변환
-                console.log(JSON.parse(req.responseText));
+
+    ID : <input type="text" name="test_id" id="test_id" />
+    <br>
+    PW : <input type="password" name="test_pw" id="test_pw" />
+    <br>
+    <button id="test_btn">회원가입</button>
+
+    <p id="test_p"></p>
+
+    <script>
+    
+    // id가 test인 요소에 클릭 이벤틀르 추가한다.
+    document.getElementById("test_btn").addEventListener("click", () => {
+
+        var headers = new Headers();
+        var csrftoken = '{{csrf_token}}';
+
+        var test_id = document.getElementById("test_id").value;
+        var test_pw = document.getElementById("test_pw").value;
+
+        headers.append('X-CSRFToken', csrftoken);
+        headers.append('Accept', 'application/json, text/plain, */*');
+        headers.append('Content-Type', 'application/x-www-form-urlencoded');
+
+        fetch('{% url "test_json" %}',
+            {
+                method: 'post',
+                headers: headers,
+                credentials: 'include',
+                body: JSON.stringify({
+                    test_id: test_id,
+                    test_pw: test_pw,
+                })
             }
-        }
-    }
+        )
+        .then((res) => res.json())
+        .then(function(response) {
+            console.log(response);            
+            document.getElementById("test_p").innerHTML = "통신성공";
+        })
+        .catch(
+        err => console.log(err)
+        );
 
-    // http 요청 타입과 주소, 동기식 여부
-    xhttp.open("POST", "test_json/", true);
-    xhttp.setRequestHeader('X-CSRFToken', '{{csrf_token}}');
+    });
+    </script> 
 
-    // xml 형식을 받을 경우
-    //xhttp.overrideMimeType('text/xml');
-    // http 요청 (form 데이터를 여기에 넣습니다.)
-    //'csrfmiddlewaretoken': '{{ csrf_token }}'
-    xhttp.send("test=1&data=hello world");
-});
-</script>
 </body>
 </html>
