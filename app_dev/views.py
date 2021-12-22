@@ -2,6 +2,7 @@ from django.shortcuts import render
 from django.http import JsonResponse
 from django.views import View
 from django.contrib.auth.models import User
+import json
 
 # local dev test
 def index(request):
@@ -29,10 +30,23 @@ class CreateUserView(View):
         return JsonResponse(data)
 
     def post(self, request):
+        response = {}
+        
+        body = request.body.decode('utf8')
+        print(body)
+        dict = json.loads(body)
+        print("="*5)
+        print(dict)
+        print("="*5)
+
         data = {'user_id':'test2', 'user_pw1':'test1', 'user_pw2':'test1'}
 
         if User.objects.filter(username=data['user_id']): 
-            print('이미 사용중인 아이디 입니다.')
+            response["result"] = "false"
+            response["status_code"] = "500"
+            response["message"] = "이미 사용중인 아이디 입니다."
+            response["return_url"] = "/"
+
         else:
             if data['user_pw1'] == data['user_pw2']: # 비밀번호 1과 2를 비교해 같을 경우 다음 함수 실행
                 
@@ -47,5 +61,5 @@ class CreateUserView(View):
 
             else :
                 print('비밀번호가 서로 다릅니다.')
-
-        return JsonResponse(data)
+        print(response)
+        return JsonResponse(response, json_dumps_params = {'ensure_ascii': False})
