@@ -34,7 +34,7 @@
             xhttp.open("POST", "singup/", true);
             xhttp.setRequestHeader('X-CSRFToken', '{{csrf_token}}');
             console.log("{{csrf_token}}");
-            xhttp.send("{\"userid\":\""+userid+"\"}");
+            xhttp.send("{\"userid\":\""+userid+"\",\"password1\":\""+password1+"\",\"password2\":\""+password2+"\"}");
         });
     </script> 
 

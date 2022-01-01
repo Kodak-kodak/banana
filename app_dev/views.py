@@ -1,4 +1,5 @@
-from django.shortcuts import render
+from django.shortcuts import render, redirect, get_object_or_404
+from django.contrib import auth
 from django.http import JsonResponse
 from django.views import View
 from django.contrib.auth.models import User
@@ -7,6 +8,10 @@ import json
 # local dev test
 def index(request):
     return render(request, 'index.html')
+
+# local dev test
+def main(request):
+    return render(request, 'test_main.html')
 
 def test_json(request):
     if request.method == 'POST':    
@@ -26,40 +31,39 @@ def test_json(request):
 class CreateUserView(View):
     def get(self, request):
         data = {'method':'get'}
-        
         return JsonResponse(data)
 
     def post(self, request):
         response = {}
         
         body = request.body.decode('utf8')
-        print(body)
-        dict = json.loads(body)
-        print("="*5)
-        print(dict)
-        print("="*5)
+        data = json.loads(body)
 
-        data = {'user_id':'test2', 'user_pw1':'test1', 'user_pw2':'test1'}
+        # testdata = {'userid':'test2', 'password1':'test1', 'password1':'test1'}
 
-        if User.objects.filter(username=data['user_id']): 
+        if User.objects.filter(username=data['userid']): 
             response["result"] = "false"
             response["status_code"] = "500"
             response["message"] = "이미 사용중인 아이디 입니다."
             response["return_url"] = "/"
-
+            return JsonResponse(response, json_dumps_params = {'ensure_ascii': False}) # Line 69과 중복이 되는데 맞는걸까
         else:
-            if data['user_pw1'] == data['user_pw2']: # 비밀번호 1과 2를 비교해 같을 경우 다음 함수 실행
-                
+            if data['password1'] == data['password2']: # 비밀번호 1과 2 비교
                 try:
                     user = User.objects.create_user(
-                        username = data['user_id'],
-                        password = data['user_pw1'],
+                        username = data['userid'],
+                        password = data['password1'],
                     )
-                    print('회원가입이 완료되었습니다.')
+                    auth.login(request, user)
+                    return redirect('main')
                 except KeyError:
-                    print('회원가입에 실패하였습니다.')
-
+                    response["result"] = "false"
+                    response["status_code"] = "200"
+                    response["message"] = "회원가입에 실패하였습니다."
+                    response["return_url"] = "/"
             else :
-                print('비밀번호가 서로 다릅니다.')
-        print(response)
-        return JsonResponse(response, json_dumps_params = {'ensure_ascii': False})
+                response["result"] = "false"
+                response["status_code"] = "200"
+                response["message"] = "비밀번호가 서로 다릅니다."
+                response["return_url"] = "/"
+            return JsonResponse(response, json_dumps_params = {'ensure_ascii': False})
