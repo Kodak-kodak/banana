@@ -5,6 +5,9 @@ from django.views import View
 from django.contrib.auth.models import User
 import json
 
+from django.contrib.auth.views import LoginView, LogoutView
+from django.conf import settings
+
 # local dev test
 def index(request):
     return render(request, 'index.html')
@@ -67,3 +70,11 @@ class CreateUserView(View):
                 response["message"] = "비밀번호가 서로 다릅니다."
                 response["return_url"] = "/"
             return JsonResponse(response, json_dumps_params = {'ensure_ascii': False})
+
+class Loginviews(LoginView):
+    template_name = 'login.html'
+login = Loginviews.as_view()
+
+class LogoutViews(LogoutView):
+    next_page = settings.LOGOUT_REDIRECT_URL
+logout = LogoutViews.as_view()
