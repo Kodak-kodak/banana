@@ -1,0 +1,10 @@
+<form action="{% url 'dev:login' %}" method="POST">
+    {%csrf_token%}
+    
+    <P>아이디 : <input type="text" name="{{ form.username.html_name }}" /></P>
+    <P>비밀번호 : <input type="password" name="{{ form.password.html_name }}" /></P>
+    
+    <input type="submit" value="로그인">
+  </form>
+  <a href="{% url 'dev:index' %}">돌아가기
+  </a>

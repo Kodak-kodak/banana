@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    
+    <P>아이디 : <input type="text" id="userid" /></P>
+    <P>비밀번호 : <input type="password" id="password1" /></P>
+    <P>비밀번호 확인 : <input type="password" id="password2" /></P>
+
+    <button id="test_btn">회원가입</button>
+    <p id="test_p"></p>
+
+    <script>
+        document.getElementById("test_btn").addEventListener("click", () => {
+            var userid = document.getElementById("userid").value;
+            var password1 = document.getElementById("password1").value;
+            var password2 = document.getElementById("password2").value;
+
+            let xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = (e) => {
+                let req = e.target;
+            }
+
+            xhttp.open("POST", "{% url 'member:singup' %}", true);
+            xhttp.setRequestHeader('X-CSRFToken', '{{csrf_token}}');
+            console.log("{{csrf_token}}");
+            xhttp.send("{\"userid\":\""+userid+"\",\"password1\":\""+password1+"\",\"password2\":\""+password2+"\"}");
+        });
+    </script> 
+
+</body>
+</html>

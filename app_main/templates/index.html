@@ -1,0 +1,10 @@
+<hr>
+{% if user.is_authenticated %}
+    <p>로그인 상태</p>
+    <a href="{% url 'member:logout' %}">로그아웃</a>
+{% else %}
+    <p>미로그인 상태</p>
+    <a href="{% url 'member:login' %}">로그인</a>
+    <a href="{% url 'member:singup' %}">회원가입</a>
+{% endif %}
+<hr>

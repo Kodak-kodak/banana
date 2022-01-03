@@ -160,8 +160,8 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, 'static')
 ]
 
-LOGIN_URL = 'dev:login'
+LOGIN_URL = 'member:login'
 
-LOGIN_REDIRECT_URL = 'dev:main'
+LOGIN_REDIRECT_URL = 'main:index'
 
-LOGOUT_REDIRECT_URL = 'dev:main'
+LOGOUT_REDIRECT_URL = 'main:index'
