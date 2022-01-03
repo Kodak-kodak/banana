@@ -1,7 +1,0 @@
-{% if user.is_authenticated %}
-로그인 상태
-<a href="{% url 'dev:logout' %}">로그아웃</a>
-{% else %}
-미로그인 상태
-<a href="{% url 'dev:index' %}">홈으로가기</a>
-{% endif %}
