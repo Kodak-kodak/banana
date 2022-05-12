@@ -1,10 +1,11 @@
 from django.db import models
 
+# invitation ==> invi
 class Invitation(models.Model):
-    invitation_title = models.CharField(max_length=200)
-    invitation_writer = models.CharField(max_length=50)
-    invitation_input_date = models.DateTimeField('date published')
-    invitation_content = models.TextField()
+    invi_title = models.CharField(max_length=200)
+    invi_writer = models.CharField(max_length=50)
+    invi_input_date = models.DateTimeField('date published')
+    invi_content = models.TextField()
 
     def __str__(self):
-        return '%s : %s' % (self.invitation_writer, self.invitation_title) 
+        return '%s : %s' % (self.invi_writer, self.invi_title) 

@@ -1,1 +1,29 @@
 <h1>Create Page</h1>
+
+<p><a href="{% url 'index' %}">Go Main</a></p>
+<p><a href="{% url 'main:create' %}">New Post</a></p>
+
+<p>제목 : <input type="text" id="invi_title" /></p>
+<p>작성자 : <input type="text" id="invi_writer" /></p>
+<p>본문 : <textarea cols=40 rows=10 id="invi_content" /></textarea></p>
+<button id="test_btn">submit !!</button>
+<p id="test_p"></p>
+
+
+<script>
+    document.getElementById("test_btn").addEventListener("click", () => {
+        var invi_title = document.getElementById("invi_title").value;
+        var invi_writer = document.getElementById("invi_writer").value;
+        var invi_content = document.getElementById("invi_content").value;
+
+        let xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = (e) => {
+            let req = e.target;
+        }
+
+        xhttp.open("POST", "{% url 'main:create' %}", true);
+        xhttp.setRequestHeader('X-CSRFToken', '{{csrf_token}}');
+        console.log("{{csrf_token}}");
+        xhttp.send("{\"invi_title\":\""+invi_title+"\",\"invi_writer\":\""+invi_writer+"\",\"invi_content\":\""+invi_content+"\"}");
+    });
+</script> 

@@ -11,18 +11,12 @@
 
 <h1>Main Page</h1>
 
-{% for invitation in invitations %}
-    {{ invitation.id }}<br>
-    {{ invitation.invitation_title }}<br>
-    {{ invitation.invitation_writer }}<br>
-    {{ invitation.invitation_input_date }}<br>
-    {{ invitation.invitation_content }}<br>
-{% endfor %}
-
-
 <p><a href="{% url 'main:create' %}">New Post</a></p>
 
- <ul>
-    <li>Step 1 초대장 리스트</li>
-    <ol><a href="">객체 1</a></ol>
- </ul>
+{% for invitation in invitations %}
+    <p>ID : {{ invitation.id }}</p>
+    <p>Title : {{ invitation.invi_title }}</p>
+    <p>Writer : {{ invitation.invi_writer }}</p>
+    <p>InputDate : {{ invitation.invi_input_date }}</p>
+    <p>Content : {{ invitation.invi_content }}</p>
+{% endfor %}
