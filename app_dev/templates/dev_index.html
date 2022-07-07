@@ -1,0 +1,26 @@
+<P>val1 : <input type="text" id="val1" /></P>
+<P>val2 : <input type="text" id="val2" /></P>
+<button id="test_btn">제출하기</button>
+<p id="test_p"></p>
+
+
+<script>
+    document.getElementById("test_btn").addEventListener("click", () => {
+        var val1 = document.getElementById("val1").value;
+        var val2 = document.getElementById("val2").value;
+        var url = "url?val1=" + val1 + "&val2=" + val2;
+
+        let xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = (e) => {
+            let req = e.target;
+            if (req.readyState === XMLHttpRequest.DONE) {
+                if (req.status === 200) {
+                    document.getElementById("test_p").innerHTML = "통신성공 : "+req.responseText;
+                }
+            }
+        }
+
+        xhttp.open("GET", url, true);
+        xhttp.send();
+    });
+</script> 
